@@ -1,0 +1,7 @@
+fastapi[all]
+sqlalchemy
+passlib
+bcrypt
+python-jose
+python-multipart
+aiofiles
