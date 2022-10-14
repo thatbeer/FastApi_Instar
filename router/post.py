@@ -1,13 +1,15 @@
 from fastapi import APIRouter, Depends, status, UploadFile, File
 from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
-from router.schemas import PostBase, PostDisplay
+from router.schemas import PostBase, PostDisplay, UserAuth
 from db.database import get_db
 from db import db_post
 from typing import List
 import shutil
 import string
 import random
+from router.schemas import UserAuth
+from auth.oauth2 import get_current_user
 
 router = APIRouter(
     prefix='/post'
@@ -17,7 +19,7 @@ router = APIRouter(
 image_url_types = ['absolute','relative']
 
 @router.post('')
-def create(request: PostBase , db: Session = Depends(get_db)):
+def create(request: PostBase , db: Session = Depends(get_db), current_user: UserAuth = Depends(get_current_user)):
     if not request.image_url_type in image_url_types:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="parameter image_url_type can ony takes values as 'abosulte' or 'relative'.")

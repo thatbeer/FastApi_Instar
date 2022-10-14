@@ -2,6 +2,7 @@ fastapi[all]
 sqlalchemy
 passlib
 bcrypt
+jose
 python-jose
 python-multipart
 aiofiles
